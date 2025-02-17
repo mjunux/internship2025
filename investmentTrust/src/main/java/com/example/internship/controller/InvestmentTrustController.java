@@ -27,7 +27,14 @@ public class InvestmentTrustController {
     public String confirmation(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
         investmentTrustForm.setBankName("ながれぼし銀行");
         model.addAttribute("bankName", investmentTrustForm.getBankName());
+        model.addAttribute("branchName", investmentTrustForm.getBranchName());
+        model.addAttribute("bankAccountType", investmentTrustForm.getBankAccountType());
         model.addAttribute("bankAccountNum", investmentTrustForm.getBankAccountNum());
+
+        model.addAttribute("name", investmentTrustForm.getName());
+        model.addAttribute("fundName", investmentTrustForm.getFundName());
+        model.addAttribute("money", investmentTrustForm.getMoney());
+
         model.addAttribute("investmentTrustApplication", investmentTrustForm);
         return "investmentTrustConfirmation";
     }
