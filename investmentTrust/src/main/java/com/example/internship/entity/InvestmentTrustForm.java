@@ -5,14 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import jakarta.validation.constraints.*;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class InvestmentTrustForm {
     @NonNull
     private String bankName;
-    @NonNull
+
+    @Digits(integer = 5,fraction = 0)
     private Integer bankAccountNum;
+
+    @Size(min = 4, max = 10)
+    private String bankBranchName;
 
     public String getBankName() {
         return bankName;
