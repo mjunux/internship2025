@@ -19,15 +19,28 @@ public class InvestmentTrustController {
     @GetMapping("/investmentTrust")
     public String bankTransfer(Model model) {
         model.addAttribute("investmentTrustApplication", new InvestmentTrustForm());
-        model.addAttribute("nameOptions", "山陰共同銀行");
+        String[] nameOptions_0 = {"山陰共同銀行", "山陽共同銀行", "陰陽共同銀行"};
+        String[] nameOptions_1 = {"りんご", "ぶどう", "みかん"};
+        String[] nameOptions_2 = {"普通", "定期", "当座"};
+        model.addAttribute("bankNames", nameOptions_0);
+        model.addAttribute("blandNames", nameOptions_1);
+        model.addAttribute("bankAccountTypes", nameOptions_2);
+        model.addAttribute("investmentTrustApplication", new InvestmentTrustForm());
         return "investmentTrustMain";
     }
 
     @PostMapping("/investmentTrustConfirmation")
     public String confirmation(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
-        investmentTrustForm.setBankName("ながれぼし銀行");
+        //investmentTrustForm.setBankName("ながれぼし銀行");
         model.addAttribute("bankName", investmentTrustForm.getBankName());
         model.addAttribute("bankAccountNum", investmentTrustForm.getBankAccountNum());
+        //以下追加したもの
+        model.addAttribute("branchName", investmentTrustForm.getBranchName());
+        model.addAttribute("bankAccountType", investmentTrustForm.getBankAccountType());
+        model.addAttribute("name", investmentTrustForm.getName());
+        model.addAttribute("fundName", investmentTrustForm.getFundName());
+        model.addAttribute("money", investmentTrustForm.getMoney());
+        //
         model.addAttribute("investmentTrustApplication", investmentTrustForm);
         return "investmentTrustConfirmation";
     }

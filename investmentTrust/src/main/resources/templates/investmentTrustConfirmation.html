@@ -3,19 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>投資信託注文確認画面</title>
+    <style>
+        body {
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        justify-content: center;
+        align-items: center;
+        min-height: 85vh;
+        overflow: auto;
+        }
+        .content {
+         background-color: #ffffff;
+         width: 40%;
+         padding: 20px;
+         border-radius: 10px;
+         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+         min-height: 50vh;
+         overflow: auto;
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        .text-danger {
+        color: red;
+        }
+        .form-control-button {
+        width: 200px;
+        padding: 10px 20px;
+        margin-top: 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        }
+        .form-confirmation-button{
+        color: white;
+        background-color: #2185D0;
+        }
+        .form-confirmation-button:hover {
+        background-color: #1678c2;
+        }
+        .form-clear-button{
+        color: red;
+
+        background-color: #E0E1E2;
+        }
+        .form-clear-button:hover {
+        background-color: #CCCCCC;
+        }
+    </style>
 </head>
-<body>
-<h1>投資信託注文確認画面</h1>
-<form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
-    <p>金融機関名: <span th:text="*{bankName}"></span></p>
-    <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>
-    <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
-    <input type="hidden" name="bankName" th:value="*{bankName}"/>
-    <p>
-        <input type="submit" id="submit" value="申込"/>
-        <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';"/>
-    </p>
-</form>
-<script th:inline="javascript" src="/js/investmentTrustConfirmation.js"></script>
+<body style="text-align:center">
+    <div class="content">
+        <h1>投資信託注文確認画面</h1>
+        <form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
+            <p>金融機関名: <span th:text="*{bankName}"></span></p>
+            <input type="hidden" name="bankName" th:value="*{bankName}"/>
+
+            <!-- 以下追加したもの -->
+            <p>支店名: <span th:text="*{branchName}"></span></p>
+            <input type="hidden" name="branchName" th:value="*{branchName}"/>
+            <p>科目名: <span th:text="*{bankAccountType}"></span></p>
+            <input type="hidden" name="bankAccountType" th:value="*{bankAccountType}"/>
+            <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>
+            <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
+            <p>購入者名: <span th:text="*{name}"></span></p>
+            <input type="hidden" name="name" th:value="*{name}"/>
+            <p>銘柄選択: <span th:text="*{fundName}"></span></p>
+            <input type="hidden" name="fundName" th:value="*{fundName}"/>
+            <p>購入金額: <span th:text="*{money}"></span></p>
+            <input type="hidden" name="money" th:value="*{money}"/>
+            <p>
+                <input type="submit" id="submit" value="申込" class="form-control-button form-confirmation-button">
+                <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';" class="form-control-button">
+            </p>
+        </form>
+        <script th:inline="javascript" src="/js/investmentTrustConfirmation.js"></script>
+    </div>
 </body>
 </html>
