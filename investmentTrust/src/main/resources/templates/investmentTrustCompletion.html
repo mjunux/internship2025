@@ -3,10 +3,125 @@
 <head>
     <meta charset="UTF-8"/>
     <title>注文完了画面</title>
+    <style class = "matrix anim">
+        @import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
+        @media screen and (max-width: 767px) {
+            .progressbar .item {
+                font-size: 11px;
+                line-height: 1.4;
+                padding: 10px 0;
+            }
+            .progressbar .item:not(:last-child)::before,
+            .progressbar .item:not(:last-child)::after {
+                border-width: 25px;
+                border-left-width: 12px;
+            }
+        }
+        /* active */
+        .progressbar .item.active {
+            z-index: 1;
+            background: #0070BD;
+            color: #FFF;
+        }
+        .progressbar .item.active:not(:last-child)::after {
+            border-left-color: #0070bd;
+        }
+        .progressbar .item.active:not(:last-child)::before {
+            border-left: none;
+        }
+        body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            justify-content: center;
+            align-items: center;
+            min-height: 25vh;
+            overflow: auto;
+        }
+        .content {
+            background-color: #ffffff;
+            width: 50%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            min-height: 50vh;
+            overflow: auto;
+        }
+        .sample_text25 {
+            position: relative;
+            font-weight:bold;
+            text-align: center;
+            margin: 0 auto 50px;
+        }
+        .sample_text25::before {
+            content: attr(data-number);
+            display: block;
+            margin-bottom: 30px;
+            color: #77bcff;
+            font-size: 50px;
+        }
+        .sample_text25::after {
+            content: '';
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 1px;
+            background-color: #77bcff;
+        }
+        .progressbar {
+            width: 52%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .progressbar .item {
+            position: relative;
+            width: 33%;
+            text-align: center;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 0;
+            line-height: 1.5;
+            background: #F5F5F5;
+            color: #999999;
+        }
+        .progressbar .item:not(:last-child)::before,
+        .progressbar .item:not(:last-child)::after {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            bottom: 0;
+            left: 100%;
+            content: '';
+            border: 37px solid transparent;
+            border-left: 20px solid #F5F5F5;
+            margin: auto;
+        }
+        .progressbar .item:not(:last-child)::before {
+            margin-left: 1px;
+            border-left-color: #FFF;
+        }
+
+    </style>
 </head>
 <body>
-<h1>注文完了</h1>
-<p><input type="button" value="注文に戻る" onclick="window.location='/investmentTrust';"/></p>
+    <div class="progressbar">
+        <div class="item">STEP.1<br>ご入力</div>
+        <div class="item">STEP.2<br>ご確認</div>
+        <div class="item active">STEP.3<br>完了</div>
+    </div>
+
+
+    <div class = "sample_text25">ご注文ありがとうございました！</div>
+    <p><input type="button" value="注文に戻る" onclick="window.location='/investmentTrust';"/></p>
+
 </body>
 
 </html>

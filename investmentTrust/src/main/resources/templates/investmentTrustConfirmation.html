@@ -3,30 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <title>投資信託注文確認画面</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
+        @media screen and (max-width: 767px) {
+            .progressbar .item {
+                font-size: 11px;
+                line-height: 1.4;
+                padding: 10px 0;
+            }
+            .progressbar .item:not(:last-child)::before,
+            .progressbar .item:not(:last-child)::after {
+                border-width: 25px;
+                border-left-width: 12px;
+            }
+        }
+        /* active */
+        .progressbar .item.active {
+            z-index: 1;
+            background: #0070BD;
+            color: #FFF;
+        }
+        .progressbar .item.active:not(:last-child)::after {
+            border-left-color: #0070bd;
+        }
+        .progressbar .item.active:not(:last-child)::before {
+            border-left: none;
+        }
+        body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            justify-content: center;
+            align-items: center;
+            min-height: 85vh;
+            overflow: auto;
+        }
+        .content {
+            background-color: #ffffff;
+            width: 50%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            min-height: 50vh;
+            overflow: auto;
+        }
+        h3{
+            display: inline-block;
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 1.4em;
+            color: white;
+
+            border-inline-width: 200px;
+            padding: 0;
+            background: #dc143c;
+            border-radius: 9999px;
+            margin-top: 8px;margin-bottom: 8px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        .form-control-danger {
+            background-color: #fa8072;
+            width: 100%;
+            padding-left: 500px;
+            padding-right: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        .text-danger {
+            color: red;
+        }
+        .form-control-button {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            font-weight: bold;
+            width: 120px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .form-confirmation-button{
+            color: white;
+            background-color: #2185D0;
+        }
+        .form-confirmation-button:hover {
+            background-color: #1678c2;
+        }
+        .form-clear-button{
+            color: black;
+            background-color: #E0E1E2;
+        }
+        .form-clear-button:hover {
+            background-color: #CCCCCC;
+        }
+        .progressbar {
+            width: 52%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .progressbar .item {
+            position: relative;
+            width: 33%;
+            text-align: center;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 0;
+            line-height: 1.5;
+            background: #F5F5F5;
+            color: #999999;
+        }
+        .progressbar .item:not(:last-child)::before,
+        .progressbar .item:not(:last-child)::after {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            bottom: 0;
+            left: 100%;
+            content: '';
+            border: 37px solid transparent;
+            border-left: 20px solid #F5F5F5;
+            margin: auto;
+        }
+        .progressbar .item:not(:last-child)::before {
+            margin-left: 1px;
+            border-left-color: #FFF;
+        }
+    </style>
 </head>
 <body>
-<h1>投資信託注文確認画面</h1>
-<form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
-    <p>金融機関名: <span th:text="*{bankName}"></span></p>
-    <p>支店名: <span th:text="*{branchName}"></span></p>
-    <p>科目名: <span th:text="*{bankAccountType}"></span></p>
-    <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>
-    <p>購入者名: <span th:text="*{name}"></span></p>
-    <p>銘柄選択: <span th:text="*{fundName}"></span></p>
-    <p>購入金額: <span th:text="*{money}"></span></p>
+<div class="progressbar">
+    <div class="item">STEP.1<br>ご入力</div>
+    <div class="item active">STEP.2<br>ご確認</div>
+    <div class="item">STEP.3<br>完了</div>
+</div>
 
-    <input type="hidden" name="bankName" th:value="*{bankName}"/>
-    <input type="hidden" name="branchName" th:value="*{branchName}"/>
-    <input type="hidden" name="bankAccountType" th:value="*{bankAccountType}"/>
-    <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
-    <input type="hidden" name="name" th:value="*{name}"/>
-    <input type="hidden" name="fundName" th:value="*{fundName}"/>
-    <input type="hidden" name="money" th:value="*{money}"/>
-    <p>
-        <input type="submit" id="submit" value="申込"/>
-        <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';"/>
-    </p>
-</form>
+<div class = "content">
+    <h1 align="center">投資信託注文確認画面</h1>
+    <form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
+        <h3>　口座情報　</h3>
+        <p>金融機関名:　 <b><span th:text="*{bankName}"></span></b></p>
+        <p>支店名　　:　 <b><span th:text="*{branchName}"></span></b></p>
+        <p>科目名　　:　 <b><span th:text="*{bankAccountType}"></span></b></p>
+        <p>口座番号　:　 <b><span th:text="*{bankAccountNum}"></span></b></p>
+        <br>
+        <h3>　購入情報　</h3>
+        <p>購入者名　:　 <b><span th:text="*{name}"></span></b></p>
+        <p>銘柄選択　:　 <b><span th:text="*{fundName}"></span></b></p>
+        <p>購入金額　:　 <b><span th:text="*{money}"></span>円</b></p>
+
+        <input type="hidden" name="bankName" th:value="*{bankName}"/>
+        <input type="hidden" name="branchName" th:value="*{branchName}"/>
+        <input type="hidden" name="bankAccountType" th:value="*{bankAccountType}"/>
+        <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
+        <input type="hidden" name="name" th:value="*{name}"/>
+        <input type="hidden" name="fundName" th:value="*{fundName}"/>
+        <input type="hidden" name="money" th:value="*{money}"/>
+        <p style="text-align: center;">
+            <input type="submit" id="submit" value="申込" class="form-control-button form-confirmation-button"/>
+            <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';" class="form-control-button form-clear-button"/>
+        </p>
+    </form>
+</div>
 <script th:inline="javascript" src="/js/investmentTrustConfirmation.js"></script>
 </body>
 </html>

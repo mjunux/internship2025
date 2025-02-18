@@ -18,14 +18,21 @@ public class InvestmentTrustController {
 
     @GetMapping("/investmentTrust")
     public String bankTransfer(Model model) {
+        String[] bankNameOptions = {"金融機関を選択してください","Bank1","Bank2","Bank3"};
+        String[] bankAccountOptions = {"科目名を選択してください","普通","定期","当座","貯蓄"};
+        String[] fundNameOptions = {"銘柄を選択してください","fundA","fundB","fundC"};
+
         model.addAttribute("investmentTrustApplication", new InvestmentTrustForm());
-        model.addAttribute("nameOptions", "山陰共同銀行");
+        model.addAttribute("bankNameOptions", bankNameOptions);
+        model.addAttribute("bankAccountOptions", bankAccountOptions);
+        model.addAttribute("fundNameOptions", fundNameOptions);
+
+
         return "investmentTrustMain";
     }
 
     @PostMapping("/investmentTrustConfirmation")
     public String confirmation(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
-        investmentTrustForm.setBankName("ながれぼし銀行");
         model.addAttribute("bankName", investmentTrustForm.getBankName());
         model.addAttribute("branchName", investmentTrustForm.getBranchName());
         model.addAttribute("bankAccountType", investmentTrustForm.getBankAccountType());

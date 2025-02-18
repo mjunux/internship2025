@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.springframework.boot.convert.DataSizeUnit;
 
 @Data
 @AllArgsConstructor
@@ -12,7 +13,7 @@ public class InvestmentTrustForm {
     @NonNull
     private String bankName;
     @NonNull
-    private Integer branchName;
+    private String branchName;
     @NonNull
     private String bankAccountType;
     @NonNull
@@ -33,10 +34,10 @@ public class InvestmentTrustForm {
     }
 
     //支店名
-    public Integer getBranchName() {
+    public String getBranchName() {
         return branchName;
     }
-    public void setBranchName(Integer branchName) {
+    public void setBranchName(String branchName) {
         this.branchName = branchName;
     }
 
@@ -56,7 +57,7 @@ public class InvestmentTrustForm {
         this.bankAccountNum = bankAccountNum;
     }
 
-    //金融機関名
+    //購入者名
     public String getName() {
         return name;
     }
@@ -69,7 +70,7 @@ public class InvestmentTrustForm {
         return fundName;
     }
     public void setFundName(String fundName) {
-        this.bankName = fundName;
+        this.fundName = fundName;
     }
 
     //口座番号
