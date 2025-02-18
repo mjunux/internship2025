@@ -10,23 +10,65 @@ import lombok.NonNull;
 @NoArgsConstructor
 public class BankTransferForm {
     @NonNull
-    private String bankName;
+    private String BankName;
     @NonNull
-    private Integer bankAccountNum;
+    private String BranchName;
+    @NonNull
+    private String SubjectName;
+    @NonNull
+    private String BankAccountName;
+    @NonNull
+    private Integer BankAccountNum;
+    @NonNull
+    private Integer TransferAmount;
+
+
+
 
     public String getBankName() {
-        return bankName;
+        return BankName;
     }
 
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
+    public void setBankName(String BankName) {
+        this.BankName = BankName;
+    }
+
+    public String getBranchName() {
+        return BranchName;
+    }
+
+    public void setBranchName(String BranchName) {
+        this.BranchName = BranchName;
+    }
+
+    public String getSubjectName() {
+        return SubjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.SubjectName = SubjectName;
+    }
+    public String getBankAccountName() {
+        return BankAccountName;
+    }
+
+    public void setBankAccountName(String BankAccountName) {
+        this.BankAccountName = BankAccountName;
     }
 
     public Integer getBankAccountNum() {
-        return bankAccountNum;
+        return BankAccountNum;
     }
 
-    public void setBankAccountNum(Integer bankAccountNum) {
-        this.bankAccountNum = bankAccountNum;
+    public void setBankAccountNum(Integer BankAccountNum) {
+        this.BankAccountNum = BankAccountNum;
+    }
+
+    public Integer getTransferAmount() {
+        return TransferAmount;
+    }
+
+    public void setTransferAmount(Integer TransferAmount) {
+      this.TransferAmount = TransferAmount;
     }
 }
