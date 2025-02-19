@@ -46,17 +46,26 @@ public class BankTransferController {
         model.addAttribute("BankAccountNameOptions", "山田太郎");
         model.addAttribute("BankAccountNumOptions", "12345");
         model.addAttribute("TransferAmountOptions", "10000");
+        model.addAttribute("DateOptions", "20250220");
         return "bankTransferMain";
     }
     @PostMapping("/bankTransferConfirmation")
     public String confirmation(@ModelAttribute BankTransferForm bankTransferForm, Model model) {
         bankTransferForm.setBankName("ながれぼし銀行");
+        System.out.println(bankTransferForm.getBankName());
+        System.out.println(bankTransferForm.getBranchName());
+        System.out.println( bankTransferForm.getSubjectName());
+        System.out.println( bankTransferForm.getBankAccountNum());
+        System.out.println(bankTransferForm.getBankAccountName());
+        System.out.println(bankTransferForm.getDate());
+        System.out.println(bankTransferForm.getTransferAmount());
         model.addAttribute("BankName", bankTransferForm.getBankName());
         model.addAttribute("BranchName", bankTransferForm.getBranchName());
-        model.addAttribute("SubjectName", bankTransferForm.getSubjectName());
+//        model.addAttribute("SubjectName", bankTransferForm.getSubjectName());
         model.addAttribute("BankAccountNum", bankTransferForm.getBankAccountNum());
         model.addAttribute("BankAccountName", bankTransferForm.getBankAccountName());
-        model.addAttribute("TransferAmount", bankTransferForm.TransferAmount());
+        model.addAttribute("TransferAmount", bankTransferForm.getDate());
+        model.addAttribute("Date", bankTransferForm.getTransferAmount());
         model.addAttribute("bankTransferApplication", bankTransferForm);
         return "bankTransferConfirmation";
     }

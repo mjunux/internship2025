@@ -21,6 +21,8 @@ public class BankTransferForm {
     private Integer BankAccountNum;
     @NonNull
     private Integer TransferAmount;
+    @NonNull
+    private Integer Date;
 
 
 
@@ -70,5 +72,13 @@ public class BankTransferForm {
 
     public void setTransferAmount(Integer TransferAmount) {
       this.TransferAmount = TransferAmount;
+    }
+
+    public Integer Date() {
+        return Date;
+    }
+
+    public void setDate(Integer Date) {
+        this.Date = Date;
     }
 }
