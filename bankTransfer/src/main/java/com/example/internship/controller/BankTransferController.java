@@ -51,7 +51,6 @@ public class BankTransferController {
     }
     @PostMapping("/bankTransferConfirmation")
     public String confirmation(@ModelAttribute BankTransferForm bankTransferForm, Model model) {
-        bankTransferForm.setBankName("ながれぼし銀行");
         System.out.println(bankTransferForm.getBankName());
         System.out.println(bankTransferForm.getBranchName());
         System.out.println( bankTransferForm.getSubjectName());
@@ -75,5 +74,7 @@ public class BankTransferController {
         applyBankTransferService.applyBankTransfer(bankTransferForm);
         return "bankTransferCompletion";
     }
+
+
 
 }

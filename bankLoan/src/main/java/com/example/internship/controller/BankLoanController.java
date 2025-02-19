@@ -25,7 +25,6 @@ public class BankLoanController {
 
     @PostMapping("/bankLoanConfirmation")
     public String confirmation(@ModelAttribute BankLoanForm bankLoanForm, Model model) {
-        bankLoanForm.setBankName("ながれぼし銀行");
         model.addAttribute("bankName", bankLoanForm.getBankName());
         model.addAttribute("bankAccountNum", bankLoanForm.getBankAccountNum());
         model.addAttribute("bankLoanApplication", bankLoanForm);
