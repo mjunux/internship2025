@@ -49,6 +49,9 @@ public class InvestmentTrustController {
     @PostMapping("/investmentTrustCompletion")
     public String completion(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
         orderInvestmentTrustService.orderInvestmentTrust(investmentTrustForm);
+        model.addAttribute("name", investmentTrustForm.getName());
+        model.addAttribute("fundName", investmentTrustForm.getFundName());
+        model.addAttribute("money", investmentTrustForm.getMoney());
         return "investmentTrustCompletion";
     }
 

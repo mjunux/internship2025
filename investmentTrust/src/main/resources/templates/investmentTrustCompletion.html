@@ -134,6 +134,16 @@
 
     <div class="content">
         <h2 class="heading-25" data-word="THANK YOU!">注文が完了しました！</h2>
+
+        <!-- 購入情報を再確認 -->
+        <form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
+            <h3>　購入情報　</h3>
+            <p>購入者名　:　 <b><span th:text="*{name}"></span></b></p>
+            <p>銘柄選択　:　 <b><span th:text="*{fundName}"></span></b></p>
+            <p>購入金額　:　 <b><span th:text="*{money}"></span>円</b></p>
+
+        </form>
+
         <!-- 確認ボタン・クリアボタン -->
         <p style="text-align: center; margin-top: 200px;">
             <input type="button" value="注文に戻る" onclick="window.location='/investmentTrust';" class="form-control-button form-return-button"/>
