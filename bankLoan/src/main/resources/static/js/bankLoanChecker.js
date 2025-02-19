@@ -4,25 +4,25 @@ function updateInterestRate() {
 
     switch (loanAmount) {
         case '100':
-            interestRateText = '3.0%';
+            interestRateText = '14.6%';
             break;
         case '200':
-            interestRateText = '2.8%';
+            interestRateText = '13.6%';
             break;
         case '300':
-            interestRateText = '2.5%';
+            interestRateText = '10.6%';
             break;
         case '500':
-            interestRateText = '2.2%';
+            interestRateText = '7.6%';
             break;
         case '1000':
-            interestRateText = '2.0%';
+            interestRateText = '6.1%';
             break;
         default:
-            interestRateText = 'お借入れ金額を選択してください';
+            interestRateText = '';
             break;
     }
 
     document.getElementById("interestRate").textContent = interestRateText;
-    document.getElementById("interestRate_pass").textContent = interestRateText;
+    document.getElementById("hiddenInterestRate").value = interestRateText;
 }

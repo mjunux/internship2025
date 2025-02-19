@@ -63,6 +63,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 10px;
         }
         .circle {
             width: 50px;
@@ -116,6 +117,8 @@
         }
         .progress_text3{
         }
+        .confirm_field{
+        }
 
     </style>
 </head>
@@ -139,21 +142,19 @@
         <div class="progress_text3">完了</div>
     </div>
 
-    <h1 style="text-align:center">ローン申込確認画面</h1>
-    <form action="#" th:action="@{/bankLoanCompletion}" th:object="${bankLoanApplication}" method="post">
-        <p>金融機関名: <span th:text="*{bankName}"></span></p>
-        <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>
-        <p>支店番号: <span th:text="*{branchName}"></span></p>
-        <p>口座種別: <span th:text="*{bankKinds}"></span></p>
-        <p>お客様氏名: <span th:text="*{name}"></span></p>
-        <p>お借入希望額: <span th:text="*{loanAmount}"></span>万円</p>
-        <p>お客様の現在の年収: <span th:text="*{annualIncome}"></span></p>
+    <h1 style="text-align:center">申込内容をご確認ください</h1>
 
-        <p>金利: <span id="interestRate"></span></p>
+    <div class="confirm_field"><form action="#" th:action="@{/bankLoanCompletion}" th:object="${bankLoanApplication}" method="post">
+        <hr>
+        <p>お客様氏名: <span th:text="*{name}"></span></p><hr>
+        <p>金融機関名: <span th:text="*{bankName}"></span></p><hr>
+        <p>支店番号: <span th:text="*{branchName}"></span></p><hr>
+        <p>口座種別: <span th:text="*{bankKinds}"></span></p><hr>
+        <p>口座番号: <span th:text="*{bankAccountNum}"></span></p><hr>
+        <p>お借入希望額: <span th:text="*{loanAmount}"></span>万円</p><hr>
+        <p>借入利率（実質年率）: <span th:text="*{interestRate}"></span></p><hr>
+        <p>お客様の現在の年収: <span th:text="*{annualIncome}"></span></p><hr>
 
-        <!--
-        <p>金利: <span th:text="*{interestRate}"></span></p>
-        -->
 
         <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
         <input type="hidden" name="bankName" th:value="*{bankName}"/>
@@ -175,10 +176,9 @@
                                               class="form-control-button form-confirmation-button"/>
             <input type="reset" value="クリア" onclick="window.location='/bankLoan';"
                    class="form-control-button form-clear-button"/></p>
-    </form>
+    </form></div>
 </div>
 <script th:inline="javascript" src="/js/bankLoanConfirmation.js"></script>
-<script src="/js/bankLoanChecker.js"></script>
 </body>
 
 </html>

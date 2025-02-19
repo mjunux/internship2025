@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import java.util.List;
+import java.util.ArrayList;
 
 @Controller
 public class BankLoanController {
@@ -18,23 +20,38 @@ public class BankLoanController {
     @GetMapping("/bankLoan")
     public String bankTransfer(Model model) {
         model.addAttribute("bankLoanApplication", new BankLoanForm());
-        model.addAttribute("nameOptions1_1", "山陰共同銀行");
-        model.addAttribute("nameOptions2_1", "普通預金");
-        model.addAttribute("nameOptions2_2", "総合預金");
-        model.addAttribute("nameOptions2_3", "当座預金");
-        model.addAttribute("nameOptions3_1", "100");
-        model.addAttribute("nameOptions3_2", "200");
-        model.addAttribute("nameOptions3_3", "300");
+
+        List<String> bankOptions = new ArrayList<>();
+        bankOptions.add("藤井銀行");
+        bankOptions.add("東京りんご銀行");
+        bankOptions.add("魚動中央銀行");
+        model.addAttribute("bankOptions",bankOptions);
+
+        List<String> bankKindsOptions = new ArrayList<>();
+        bankKindsOptions.add("普通預金");
+        bankKindsOptions.add("総合預金");
+        bankKindsOptions.add("当座預金");
+        model.addAttribute("bankKindsOptions",bankKindsOptions);
+
+        List<Integer> loanAmountOptions = new ArrayList<>();
+        loanAmountOptions.add(100);
+        loanAmountOptions.add(200);
+        loanAmountOptions.add(300);
+        loanAmountOptions.add(500);
+        loanAmountOptions.add(1000);
+        model.addAttribute("loanAmountOptionsNull", "");
+        model.addAttribute("loanAmountOptions",loanAmountOptions);
+
         return "bankLoanMain";
     }
 
     @PostMapping("/bankLoanConfirmation")
     public String confirmation(@ModelAttribute BankLoanForm bankLoanForm, Model model) {
-        bankLoanForm.setBankName("ながれぼし銀行");
-        System.out.println(bankLoanForm.getInterestRate());
         model.addAttribute("bankName", bankLoanForm.getBankName());
         model.addAttribute("bankAccountNum", bankLoanForm.getBankAccountNum());
+        model.addAttribute("interestRate", bankLoanForm.getInterestRate());
         model.addAttribute("bankLoanApplication", bankLoanForm);
+
         return "bankLoanConfirmation";
     }
 

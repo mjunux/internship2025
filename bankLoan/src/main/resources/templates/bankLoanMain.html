@@ -5,12 +5,26 @@
     <title>ローン申込情報入力画面</title>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Kosugi');
+        header{
+            width: 100%;
+            height: 50px;
+            background: white;
+            padding: 20px 50px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            z-index: 1;
+            border: 1px solid #a9a9a9;
+        }
         body {
         background-color: #f0f0f0;
         margin: 0;
         padding: 0;
         display: flex;
-        padding-top: 40px;
+        padding-top: 90px;
         padding-bottom: 40px;
         justify-content: center;
         align-items: center;
@@ -32,7 +46,8 @@
         }
         .form-control {
             width: 70%;
-            padding: 8px;
+            height: 40px;
+            padding: 12px 20px;
             margin: 5px 0;
             box-sizing: border-box;
         }
@@ -66,6 +81,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 10px;
         }
         .circle {
             width: 50px;
@@ -128,6 +144,9 @@
     </style>
 </head>
 <body>
+<header>
+    <h1 style="color: #dc143c">マコム</h1>
+</header>
 <div class="content">
     <!-- 申し込み進捗表示 -->
     <div class="circle-container">
@@ -150,76 +169,72 @@
     <h1 style="text-align:center">ローン申込情報入力</h1>
     <div>
         <form action="#" th:action="@{/bankLoanConfirmation}" th:object="${bankLoanApplication}" class="content-control" method="post">
-        <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{bankName}" class="form-control">
-                <option th:each="option : ${nameOptions1_1}"
-                        th:value="${option}"
-                        th:text="${option}">選択肢
-                </option>
-            </select></p>
-        <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567" min="1111111" max="9999999" required/></p>
-        <p><label class="ml-1">支店番号 ：　<small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{branchName}" class="form-control" placeholder="123" min="111" max="999"/></p>
-        <p><label class="ml-1">口座種別: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{bankKinds}" class="form-control">
-                <option th:each="option : ${nameOptions2_1}"
-                        th:value="${option}"
-                        th:text="${option}">選択肢
-                </option>
-                <option th:each="option : ${nameOptions2_2}"
-                        th:value="${option}"
-                        th:text="${option}">選択肢
-                </option>
-                <option th:each="option : ${nameOptions2_3}"
-                        th:value="${option}"
-                        th:text="${option}">選択肢
-                </option>
-            </select></p>
-        <p><label class="ml-1">お客様氏名 : <small class="text-danger ml-1">※</small></label><br>
-            <input type="text" th:field="*{name}" class="form-control" placeholder="山本太郎" maxlength="20" required/></p>
 
+            <!--お客様氏名入力フォーム-->
+            <p><label class="ml-1">お客様氏名 : <small class="text-danger ml-1">※</small></label><br>
+                <input type="text" th:field="*{name}" class="form-control" placeholder="山本太郎" maxlength="20" required/></p>
+
+            <!--金融機関選択フォーム-->
+            <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
+                <select th:field="*{bankName}" class="form-control" id="bankName" onchange="updateBranches()">
+                    <option value="">選択してください</option>
+                    <option th:each="option : ${bankOptions}"
+                            th:value="${option}"
+                            th:text="${option}">選択肢</option>
+                </select>
+            </p>
+
+            <!--支店名選択フォーム-->
+            <p><label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
+                <select th:field="*{branchName}" class="form-control" id="branchName">
+                    <option value="">金融機関名を選択してください</option>
+                </select>
+            </p>
+
+            <!--口座種別選択フォーム-->
+            <p><label class="ml-1">口座種別: <small class="text-danger ml-1">※</small></label><br>
+                <select th:field="*{bankKinds}" class="form-control">
+                    <option th:each="option : ${bankKindsOptions}"
+                            th:value="${option}"
+                            th:text="${option}">選択肢
+                    </option>
+                </select></p>
+
+            <!--口座番号入力フォーム-->
+            <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
+                <input type="text" th:field="*{bankAccountNum}" class="form-control" placeholder="7桁で入力してください" maxlength="7" pattern=[0-9]{7} required/></p>
+
+            <!--借入希望額選択フォーム-->
             <p><label class="ml-1">お借入れ希望額（万円）: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{loanAmount}" class="form-control" name="loanAmount" onchange="updateInterestRate()">
-                <option th:each="option : ${nameOptions3_1}"
+            <select th:field="*{loanAmount}" class="form-control" name="loanAmount" onchange="updateInterestRate()" required>
+                <option selected th:each="option : ${loanAmountOptionsNull}"
                         th:value="${option}"
                         th:text="${option}">選択肢
                 </option>
-                <option th:each="option : ${nameOptions3_2}"
-                        th:value="${option}"
-                        th:text="${option}">選択肢
-                </option>
-                <option th:each="option : ${nameOptions3_3}"
+                <option th:each="option : ${loanAmountOptions}"
                         th:value="${option}"
                         th:text="${option}">選択肢
                 </option>
             </select></p>
 
-            <!-- 借入金額から金利を判定-->
+            <!-- 借入金額から金利を判定 -->
             <div class="result">
-                <p>金利: <span id="interestRate" th:field="*{interestRate}">お借入金額を選択してください</span></p>
+                <p>借入利率（実質年率）：<span id="interestRate"></span></p>
+                <input type="hidden" th:field="*{interestRate}" id="hiddenInterestRate"/>
             </div>
 
-            <input type="hidden" name="interestRate" th:value=""/>
+            <!--年収入力フォーム-->
+            <p><label class="ml-1">お客様のご年収(万円): </label><br>
+                <input type="number" th:field="*{annualIncome}" class="form-control" placeholder=""/></p>
 
-            <!--　次の画面で金利を表示するために金利の値を渡したい -->
-            <!-- これじゃダメだったよ、、
-            <input type="hidden" name="interestRate" th:value="*{interestRate}"/>
-            -->
-
-            <!--
-            <p><label class="ml-1">お借入れ希望額（万円）:<small class="text-danger ml-1">※</small></label><br>
-                <input type="number" th:field="*{loanAmount}" class="form-control" placeholder="10" required/></p>
-            -->
-        <p><label class="ml-1">お客様のご年収: </label><br>
-            <input type="number" th:field="*{annualIncome}" class="form-control" placeholder=""/></p>
-
-        <p style="text-align: center;"><input type="submit" value="確認"
+            <p style="text-align: center;"><input type="submit" value="確認"
                                               class="form-control-button form-confirmation-button"/>
-            <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>
+                <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>
     </form>
     </div>
 </div>
+
+<script src="/js/branchesBanks.js"></script>
 <script src="/js/bankLoanChecker.js"></script>
 </body>
 

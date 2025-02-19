@@ -9,7 +9,7 @@ const submitButton = document.getElementById("submit");
 const cancelButton = document.getElementById("cancel");
 
 submitButton.addEventListener('click', (e) => {
-  const isConfirmed = confirm("操作を実行しますか？"); // 確認ダイアログを表示
+  const isConfirmed = confirm("申込を実行してよろしいでしょうか？"); // 確認ダイアログを表示
 
   if (!isConfirmed) { // キャンセルした場合
     e.preventDefault(); // 送信動作をキャンセル
