@@ -23,7 +23,7 @@ public class InvestmentTrustForm {
     @NonNull
     private String fundName;
     @NonNull
-    private Integer money;
+    private Integer unit;
 
     //金融機関名
     public String getBankName() {
@@ -73,12 +73,12 @@ public class InvestmentTrustForm {
         this.fundName = fundName;
     }
 
-    //口座番号
-    public Integer getMoney() {
-        return money;
+    //購入口数
+    public Integer getUnit() {
+        return unit;
     }
-    public void setMoney(Integer money) {
-        this.money = money;
+    public void setUnit(Integer unit) {
+        this.unit = unit;
     }
 
 }

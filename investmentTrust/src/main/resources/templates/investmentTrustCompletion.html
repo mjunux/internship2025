@@ -30,8 +30,9 @@
             border-left: none;
         }
         body {
+            font-size: 20px;
             font-family: 'M PLUS Rounded 1c', sans-serif;
-            background-color: #f0f0f0;
+            background-color: #bfe3ff;
             margin: 0;
             padding: 0;
             display: flex;
@@ -49,10 +50,12 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            min-height: 50vh;
+            min-height: 30vh;
             overflow: auto;
         }
         .heading-25 {
+            font-weight: 600;
+            font-size: 35px;
             position: relative;
             padding-top: .75em;
             color: #333333;
@@ -115,11 +118,67 @@
             font-weight: bold;
             color: black;
             background-color: #E0E1E2;
+            font-size: 20px;
+            padding: 10px;
         }
         .form-return-button:hover {
             background-color: #CCCCCC;
         }
+        /*二分割表示*/
+        .split{
+            display: table;
+            width: 100%;
+        }
+        .split-item{
+            display: table-cell;
+            padding: 20px;
+            width: 50%;
+        }
+        .split-left{
+            width: -webkit-fill-available;
+        }
+        .split-left__inner{
+            height: 100%;
+            position: sticky;
+            width: -webkit-fill-available;
+        }
+        .split-right__inner{
+            height: 80%;
+        }
+        @media screen and (max-width:1024px) {
+            .split{
+                display: block;
+            }
+            .split-item{
+                display: block;
+                width: auto;
+            }
+            .split-left__inner{
+                position: sticky;
+                width: auto;
+            }
+        }
+        b{
+            font-size: 24px;
+        }
+        h3{
+            display: inline-block;
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 1.4em;
+            color: white;
 
+
+            border-inline-width: 200px;
+            padding-left: 12px;
+            padding-right: 12px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            background: #5D5D63;
+            border-radius: 9999px;
+            margin-top: 8px;margin-bottom: 8px;
+
+        }
     </style>
 </head>
 <body>
@@ -133,16 +192,31 @@
 
 
     <div class="content">
-        <h2 class="heading-25" data-word="THANK YOU!">注文が完了しました！</h2>
-
         <!-- 購入情報を再確認 -->
         <form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
-            <h3>　購入情報　</h3>
-            <p>購入者名　:　 <b><span th:text="*{name}"></span></b></p>
-            <p>銘柄選択　:　 <b><span th:text="*{fundName}"></span></b></p>
-            <p>購入金額　:　 <b><span th:text="*{money}"></span>円</b></p>
-
+            <div class="split completed">
+                <div class="split-item split-left">
+                    <div class="split-left__inner">
+                        <h3>　口座情報　</h3>
+                        <p>金融機関名:　 <b><span th:text="*{bankName}"></span></b></p>
+                        <p>支店名　　:　 <b><span th:text="*{branchName}"></span></b></p>
+                        <p>科目名　　:　 <b><span th:text="*{bankAccountType}"></span></b></p>
+                        <p>口座番号　:　 <b><span th:text="*{bankAccountNum}"></span></b></p>
+                    </div><!--split-left__inner-->
+                </div><!--split-item split-left-->
+                <div class="split-item split-right">
+                    <div class="split-right__inner">
+                        <h3>　購入情報　</h3>
+                        <p>購入者名　:　 <b><span th:text="*{name}"></span></b></p>
+                        <p>銘柄選択　:　 <b><span th:text="*{fundName}"></span></b></p>
+                        <p>購入金額　:　 <b><span th:text="*{money}"></span>円</b></p>
+                    </div><!--split-right__inner-->
+                </div><!--split-item split-right-->
+            </div>
         </form>
+
+        <img src="jetbrains://idea/navigate/reference?project=internship2025&path=images%2Fpleasure.png" align="top">
+
 
         <!-- 確認ボタン・クリアボタン -->
         <p style="text-align: center; margin-top: 200px;">

@@ -19,8 +19,8 @@ public class InvestmentTrustController {
     @GetMapping("/investmentTrust")
     public String bankTransfer(Model model) {
         String[] bankNameOptions = {"金融機関を選択してください","Bank1","Bank2","Bank3"};
-        String[] bankAccountOptions = {"科目名を選択してください","普通","定期","当座","貯蓄"};
-        String[] fundNameOptions = {"銘柄を選択してください","fundA","fundB","fundC"};
+        String[] bankAccountOptions = {"科目名を選択してください","普通","貯蓄"};
+        String[] fundNameOptions = {"銘柄を選択してください","fundA（1.2円/口）","fundB（1.5円/口）","fundC(1.3円/口)"};
 
         model.addAttribute("investmentTrustApplication", new InvestmentTrustForm());
         model.addAttribute("bankNameOptions", bankNameOptions);

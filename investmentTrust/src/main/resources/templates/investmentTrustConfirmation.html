@@ -66,7 +66,7 @@
         }
         body {
             font-family: 'M PLUS Rounded 1c', sans-serif;
-            background-color: #f0f0f0;
+            background-color: #c8c8cb;
             margin: 0;
             padding: 0;
             display: flex;
@@ -77,6 +77,8 @@
             align-items: center;
             min-height: 85vh;
             overflow: auto;
+            font-size: 20px;
+
         }
         .content {
             background-color: #ffffff;
@@ -87,16 +89,20 @@
             min-height: 30vh;
             overflow: auto;
         }
+        h1{
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
         h3{
             display: inline-block;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 300;
             line-height: 1.4em;
             color: white;
 
             border-inline-width: 200px;
             padding: 0;
-            background: #dc143c;
+            background: #0070BD;
             border-radius: 9999px;
             margin-top: 8px;margin-bottom: 8px;
         }
@@ -119,10 +125,11 @@
             color: red;
         }
         .form-control-button {
+            font-size: 20px;
             font-family: 'M PLUS Rounded 1c', sans-serif;
             font-weight: bold;
             width: 120px;
-            padding: 10px 20px;
+            padding: 10px 10px;
             margin-top: 10px;
             border: none;
             cursor: pointer;
@@ -153,12 +160,12 @@
             width: 50%;
         }
         .split-left{
-            width: 50%;
+            width: -webkit-fill-available;
         }
         .split-left__inner{
             height: 100%;
-            position: fixed;
-            width: 50%;
+            position: sticky;
+            width: -webkit-fill-available;
         }
         .split-right__inner{
             height: 80%;
@@ -172,9 +179,12 @@
                 width: auto;
             }
             .split-left__inner{
-                position: inherit;
+                position: sticky;
                 width: auto;
             }
+        }
+        b{
+            font-size: 24px;
         }
     </style>
 </head>
@@ -186,7 +196,7 @@
 </div>
 
 <div class = "content">
-
+    <h1 align="center">注文確認</h1>
     <form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
         <div class="split">
             <div class="split-item split-left">
@@ -203,11 +213,17 @@
                     <h3>　購入情報　</h3>
                     <p>購入者名　:　 <b><span th:text="*{name}"></span></b></p>
                     <p>銘柄選択　:　 <b><span th:text="*{fundName}"></span></b></p>
-                    <p>購入金額　:　 <b><span th:text="*{money}"></span>円</b></p>
+                    <p>購入金額　:　 <b><span th:text="*{finalMoney}"></span>円</b></p>
                 </div><!--split-right__inner-->
             </div><!--split-item split-right-->
         </div>
-        <br>
+        <input type="hidden" name="bankName" th:value="*{bankName}"/>
+        <input type="hidden" name="branchName" th:value="*{branchName}"/>
+        <input type="hidden" name="bankAccountType" th:value="*{bankAccountType}"/>
+        <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
+        <input type="hidden" name="name" th:value="*{name}"/>
+        <input type="hidden" name="fundName" th:value="*{fundName}"/>
+        <input type="hidden" name="money" th:value="*{finalMoney}"/>
         <p style="text-align: center;">
             <input type="submit" id="submit" value="申込" class="form-control-button form-confirmation-button"/>
             <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';" class="form-control-button form-clear-button"/>

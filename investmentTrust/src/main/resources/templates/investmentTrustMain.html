@@ -66,7 +66,7 @@
         }
         body {
             font-family: 'M PLUS Rounded 1c', sans-serif;
-            background-color: #f0f0f0;
+            background-color: #bfe3ff;
             margin: 0;
             padding: 0;
             display: flex;
@@ -77,6 +77,7 @@
             align-items: center;
             min-height: 85vh;
             overflow: auto;
+            font-size: 20px;
         }
         .content {
          background-color: #ffffff;
@@ -88,10 +89,12 @@
          overflow: auto;
         }
         .form-control {
-            width: 100%;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            width: -webkit-fill-available;
             padding: 8px;
             margin: 5px 0;
             box-sizing: border-box;
+            font-size: 17px;
         }
         .text-danger {
         font-family: 'M PLUS Rounded 1c', sans-serif;
@@ -99,7 +102,7 @@
         }
         .form-control-button {
         width: 80px;
-        padding: 10px 20px;
+        padding: 10px 10px;
         margin-top: 10px;
         border: none;
         cursor: pointer;
@@ -110,6 +113,7 @@
             font-weight: normal;
             color: white;
             background-color: #2185D0;
+            font-size: 20px;
         }
         .form-confirmation-button:hover {
         background-color: #1678c2;
@@ -119,6 +123,7 @@
             font-weight: bold;
             color: black;
             background-color: #E0E1E2;
+            font-size: 20px;
         }
         .form-clear-button:hover {
         background-color: #CCCCCC;
@@ -138,8 +143,8 @@
         }
         .split-left__inner{
             height: 20%;
-            position: fixed;
-            width: 20%;
+            position: sticky;
+            width: -webkit-fill-available;
         }
         .split-right__inner{
             height: 80%;
@@ -153,18 +158,41 @@
                 width: auto;
             }
             .split-left__inner{
-                position: fixed;
+                position: sticky;
                 width: auto;
                 /*width: 20%;*/
             }
         }
         /*ボタン・フォーム間の距離調整*/
         .button-field{
-            margin-top: 10%;
+            margin-top: 0;
+        }
+        h1{
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+        h3{
+            display: inline-block;
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 1.4em;
+            color: white;
+
+
+            border-inline-width: 200px;
+            padding-left: 12px;
+            padding-right: 12px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            background: #0070BD;
+            border-radius: 9999px;
+            margin-top: 8px;margin-bottom: 8px;
+
         }
     </style>
 </head>
 <body>
+    <div id="Finamoney">ぐろーばる</div>
     <!-- 進捗バーの表示 -->
     <div class="progressbar">
         <div class="item active">STEP.1<br>ご入力</div>
@@ -174,7 +202,6 @@
 
     <div class="content">
         <h1 align="center">投資信託注文情報入力</h1>
-
         <form action="#" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post">
             <div class="split">
                 <div class="split-item split-left">
@@ -190,7 +217,7 @@
 
                         <!-- 支店名 -->
                         <p><label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
-                            <input type="text" id = "branch" th:field="*{branchName}" class="form-control" placeholder="かもめ（20文字以内で記入）"/></p>
+                            <input type="text" id = "branch" th:field="*{branchName}" class="form-control" placeholder="20文字以内で記入してください（例：かもめ）"/></p>
                         <!--　科目名 -->
                         <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
                             <select id= "bankAccount" th:field="*{bankAccountType}" class="form-control">
@@ -202,7 +229,7 @@
 
                         <!--　口座番号 -->
                         <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
-                            <input type="number" id = "bankAccountNum" th:field="*{bankAccountNum}" min = 1 max = 9999999 class="form-control" placeholder="1234567（7桁の数字で記入）" /></p>
+                            <input type="number" id = "bankAccountNum" th:field="*{bankAccountNum}" min = 1 max = 9999999 class="form-control" placeholder="口座番号を7桁で記入（例：1234567）" /></p>
                     </div><!--split-left__inner-->
                 </div><!--split-item split-left-->
                 <div class="split-item split-right">
@@ -210,20 +237,30 @@
                         <h3>購入情報</h3>
                         <!-- 購入者名 -->
                         <p><label class="ml-1">購入者名: <small class="text-danger ml-1">※</small></label><br>
-                            <input type="text" id = "name" th:field="*{name}" maxlength="20" class="form-control" placeholder="山田太郎"/></p>
+                            <input type="text" id = "name" th:field="*{name}" maxlength="20" class="form-control" placeholder="購入者名を20文字以内で記入（例：山田太郎）" /></p>
 
                         <!--　銘柄選択 -->
                         <p><label class="ml-1">銘柄選択: <small class="text-danger ml-1">※</small></label><br>
-                            <select id = "fundName" th:field="*{fundName}" class="form-control">
+                            <select id = "fundName" th:field="*{fundName}" class="form-control" onchange="inputCheck()">
                                 <option th:each="option : ${fundNameOptions}"
                                         th:value="${option}"
                                         th:text="${option}">選択肢
                                 </option>
                             </select></p>
-
                         <!-- 購入金額 -->
                         <p><label class="ml-1">購入金額(円): <small class="text-danger ml-1">※</small></label><br>
-                            <input type="number" id = "money" th:field="*{money}" min = 1 max=99999999999999999999 class="form-control" placeholder="1000"/></p>
+                            <input type="number" id = "money" th:field="*{money}" min = 1 max=99999999999999999999 class="form-control" placeholder="100円以上で購入してください（例：1000）"  onkeyup="inputCheck()"/></p>
+                            <div id="check">入力前</div>
+                        <script>
+                            function inputCheck() {
+                                var inputValue = document.getElementById( "money" ).value;
+                                var fundVariety = document.getElementById( "fundName" ).value;
+                                inputValue = inputValue*300;
+                                document.getElementById( "check" ).innerHTML = fundVariety + '\n' + inputValue + " 円";
+                                document.getElementById( "money" ).value = inputValue;
+                            }
+                        </script>
+
                     </div><!--split-right__inner-->
                 </div><!--split-item split-right-->
             </div><!--split-->
@@ -351,6 +388,13 @@
                 //購入金額の入力確認
                 if(money.length === 0){
                     alertText += '【購入金額】未入力です。\n';
+                    errorNum += 1;
+                    focus();
+                    moneyBox.style.backgroundColor = "#f0e68c"
+                    flag = false;
+                }
+                else if(money.length <= 2){
+                    alertText += '【購入金額】100円以上購入してください。\n';
                     errorNum += 1;
                     focus();
                     moneyBox.style.backgroundColor = "#f0e68c"
