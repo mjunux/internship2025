@@ -197,9 +197,10 @@
 
             <!-- 借入金額から金利を判定-->
             <div class="result">
-                <p>金利: <span id="interestRate">お借入金額を選択してください</span></p>
-                <input type="hidden" name="interestRate" th:value="*{interestRate}"/>
+                <p>金利: <span id="interestRate" th:field="*{interestRate}">お借入金額を選択してください</span></p>
             </div>
+
+            <input type="hidden" name="interestRate" th:value=""/>
 
             <!--　次の画面で金利を表示するために金利の値を渡したい -->
             <!-- これじゃダメだったよ、、

@@ -100,8 +100,21 @@
             font-size: 20px
         }
         .progress_text{
-            padding-left: 130px;
-            padding-top: 5px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-right: 40px;
+            padding-top: 3px;
+            font-size: 13px;
+        }
+        .progress_text1{
+        }
+        .progress_text2{
+            padding-left: 155px;
+            padding-right: 185px;
+        }
+        .progress_text3{
         }
 
     </style>
@@ -120,6 +133,11 @@
             <div class="text_container">3</div>
         </div>
     </div>
+    <div class="progress_text">
+        <div class="progress_text1">お客様情報入力</div>
+        <div class="progress_text2">ご確認</div>
+        <div class="progress_text3">完了</div>
+    </div>
 
     <h1 style="text-align:center">ローン申込確認画面</h1>
     <form action="#" th:action="@{/bankLoanCompletion}" th:object="${bankLoanApplication}" method="post">
@@ -130,7 +148,12 @@
         <p>お客様氏名: <span th:text="*{name}"></span></p>
         <p>お借入希望額: <span th:text="*{loanAmount}"></span>万円</p>
         <p>お客様の現在の年収: <span th:text="*{annualIncome}"></span></p>
+
+        <p>金利: <span id="interestRate"></span></p>
+
+        <!--
         <p>金利: <span th:text="*{interestRate}"></span></p>
+        -->
 
         <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
         <input type="hidden" name="bankName" th:value="*{bankName}"/>
@@ -155,5 +178,7 @@
     </form>
 </div>
 <script th:inline="javascript" src="/js/bankLoanConfirmation.js"></script>
+<script src="/js/bankLoanChecker.js"></script>
 </body>
+
 </html>

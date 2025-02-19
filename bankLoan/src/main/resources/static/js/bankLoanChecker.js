@@ -24,4 +24,5 @@ function updateInterestRate() {
     }
 
     document.getElementById("interestRate").textContent = interestRateText;
+    document.getElementById("interestRate_pass").textContent = interestRateText;
 }
