@@ -48,10 +48,11 @@ public class InvestmentTrustController {
 
     @PostMapping("/investmentTrustCompletion")
     public String completion(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
+        System.out.println(investmentTrustForm.getName());
+        System.out.println(investmentTrustForm.getFundName());
+        System.out.println(investmentTrustForm.getMoney());
+        model.addAttribute("investmentTrustApplication", investmentTrustForm);
         orderInvestmentTrustService.orderInvestmentTrust(investmentTrustForm);
-        model.addAttribute("name", investmentTrustForm.getName());
-        model.addAttribute("fundName", investmentTrustForm.getFundName());
-        model.addAttribute("money", investmentTrustForm.getMoney());
         return "investmentTrustCompletion";
     }
 
