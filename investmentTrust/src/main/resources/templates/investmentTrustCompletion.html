@@ -52,29 +52,23 @@
             min-height: 50vh;
             overflow: auto;
         }
-        .sample_text25 {
+        .heading-25 {
             position: relative;
-            font-weight:bold;
-            text-align: center;
-            margin: 0 auto 50px;
+            padding-top: .75em;
+            color: #333333;
         }
-        .sample_text25::before {
-            content: attr(data-number);
-            display: block;
-            margin-bottom: 30px;
-            color: #77bcff;
-            font-size: 50px;
-        }
-        .sample_text25::after {
-            content: '';
+        .heading-25::before {
             position: absolute;
-            top: 90px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 1px;
-            background-color: #77bcff;
+            bottom: .5em;
+            left: 0;
+            z-index: -1;
+            color: #d3f1fd;
+            font-size: 1.5em;
+            line-height: 1;
+            content: attr(data-word);
+            pointer-events: none;
         }
+        /*進捗バーの表示*/
         .progressbar {
             width: 52%;
             display: flex;
@@ -108,6 +102,23 @@
             margin-left: 1px;
             border-left-color: #FFF;
         }
+        .form-control-button {
+            width: 120px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .form-return-button{
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            font-weight: bold;
+            color: black;
+            background-color: #E0E1E2;
+        }
+        .form-return-button:hover {
+            background-color: #CCCCCC;
+        }
 
     </style>
 </head>
@@ -118,9 +129,17 @@
         <div class="item active">STEP.3<br>完了</div>
     </div>
 
+    <h2 class="heading-25" data-word="THANK YOU!">注文が完了しました！</h2>
 
-    <div class = "sample_text25">ご注文ありがとうございました！</div>
-    <p><input type="button" value="注文に戻る" onclick="window.location='/investmentTrust';"/></p>
+
+    <div class="content">
+        <h2 class="heading-25" data-word="THANK YOU!">注文が完了しました！</h2>
+        <!-- 確認ボタン・クリアボタン -->
+        <p style="text-align: center; margin-top: 200px;">
+            <input type="button" value="注文に戻る" onclick="window.location='/investmentTrust';" class="form-control-button form-return-button"/>
+        </p>
+    </div>
+
 
 </body>
 

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>投資信託注文確認画面</title>
     <style>
+        /*フォント設定*/
         @import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
+        /*進捗バー*/
         @media screen and (max-width: 767px) {
             .progressbar .item {
                 font-size: 11px;
@@ -29,6 +31,39 @@
         .progressbar .item.active:not(:last-child)::before {
             border-left: none;
         }
+        .progressbar {
+            width: 52%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .progressbar .item {
+            position: relative;
+            width: 33%;
+            text-align: center;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 0;
+            line-height: 1.5;
+            background: #F5F5F5;
+            color: #999999;
+        }
+        .progressbar .item:not(:last-child)::before,
+        .progressbar .item:not(:last-child)::after {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            bottom: 0;
+            left: 100%;
+            content: '';
+            border: 37px solid transparent;
+            border-left: 20px solid #F5F5F5;
+            margin: auto;
+        }
+        .progressbar .item:not(:last-child)::before {
+            margin-left: 1px;
+            border-left-color: #FFF;
+        }
         body {
             font-family: 'M PLUS Rounded 1c', sans-serif;
             background-color: #f0f0f0;
@@ -49,7 +84,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            min-height: 50vh;
+            min-height: 30vh;
             overflow: auto;
         }
         h3{
@@ -107,38 +142,39 @@
         .form-clear-button:hover {
             background-color: #CCCCCC;
         }
-        .progressbar {
-            width: 52%;
-            display: flex;
-            flex-wrap: wrap;
+        /*二分割表示*/
+        .split{
+            display: table;
+            width: 100%;
         }
-        .progressbar .item {
-            position: relative;
-            width: 33%;
-            text-align: center;
-            position: relative;
-            align-items: center;
-            justify-content: center;
-            padding: 13px 0;
-            line-height: 1.5;
-            background: #F5F5F5;
-            color: #999999;
+        .split-item{
+            display: table-cell;
+            padding: 20px;
+            width: 50%;
         }
-        .progressbar .item:not(:last-child)::before,
-        .progressbar .item:not(:last-child)::after {
-            position: absolute;
-            z-index: 2;
-            top: 0;
-            bottom: 0;
-            left: 100%;
-            content: '';
-            border: 37px solid transparent;
-            border-left: 20px solid #F5F5F5;
-            margin: auto;
+        .split-left{
+            width: 50%;
         }
-        .progressbar .item:not(:last-child)::before {
-            margin-left: 1px;
-            border-left-color: #FFF;
+        .split-left__inner{
+            height: 20%;
+            position: fixed;
+            width: 50%;
+        }
+        .split-right__inner{
+            height: 80%;
+        }
+        @media screen and (max-width:1024px) {
+            .split{
+                display: block;
+            }
+            .split-item{
+                display: block;
+                width: auto;
+            }
+            .split-left__inner{
+                position: inherit;
+                width: auto;
+            }
         }
     </style>
 </head>
@@ -150,31 +186,34 @@
 </div>
 
 <div class = "content">
-    <h1 align="center">投資信託注文確認画面</h1>
-    <form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
-        <h3>　口座情報　</h3>
-        <p>金融機関名:　 <b><span th:text="*{bankName}"></span></b></p>
-        <p>支店名　　:　 <b><span th:text="*{branchName}"></span></b></p>
-        <p>科目名　　:　 <b><span th:text="*{bankAccountType}"></span></b></p>
-        <p>口座番号　:　 <b><span th:text="*{bankAccountNum}"></span></b></p>
-        <br>
-        <h3>　購入情報　</h3>
-        <p>購入者名　:　 <b><span th:text="*{name}"></span></b></p>
-        <p>銘柄選択　:　 <b><span th:text="*{fundName}"></span></b></p>
-        <p>購入金額　:　 <b><span th:text="*{money}"></span>円</b></p>
 
-        <input type="hidden" name="bankName" th:value="*{bankName}"/>
-        <input type="hidden" name="branchName" th:value="*{branchName}"/>
-        <input type="hidden" name="bankAccountType" th:value="*{bankAccountType}"/>
-        <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
-        <input type="hidden" name="name" th:value="*{name}"/>
-        <input type="hidden" name="fundName" th:value="*{fundName}"/>
-        <input type="hidden" name="money" th:value="*{money}"/>
+    <form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
+        <div class="split">
+            <div class="split-item split-left">
+                <div class="split-left__inner">
+                    <h3>　口座情報　</h3>
+                    <p>金融機関名:　 <b><span th:text="*{bankName}"></span></b></p>
+                    <p>支店名　　:　 <b><span th:text="*{branchName}"></span></b></p>
+                    <p>科目名　　:　 <b><span th:text="*{bankAccountType}"></span></b></p>
+                    <p>口座番号　:　 <b><span th:text="*{bankAccountNum}"></span></b></p>
+                </div><!--split-left__inner-->
+            </div><!--split-item split-left-->
+            <div class="split-item split-right">
+                <div class="split-right__inner">
+                    <h3>　購入情報　</h3>
+                    <p>購入者名　:　 <b><span th:text="*{name}"></span></b></p>
+                    <p>銘柄選択　:　 <b><span th:text="*{fundName}"></span></b></p>
+                    <p>購入金額　:　 <b><span th:text="*{money}"></span>円</b></p>
+                </div><!--split-right__inner-->
+            </div><!--split-item split-right-->
+        </div>
+        <br>
         <p style="text-align: center;">
             <input type="submit" id="submit" value="申込" class="form-control-button form-confirmation-button"/>
             <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';" class="form-control-button form-clear-button"/>
         </p>
     </form>
+
 </div>
 <script th:inline="javascript" src="/js/investmentTrustConfirmation.js"></script>
 </body>

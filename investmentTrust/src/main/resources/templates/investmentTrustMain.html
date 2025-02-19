@@ -4,7 +4,9 @@
     <meta charset="UTF-8"/>
     <title>投資信託注文情報入力画面</title>
     <style>
+        /*フォント設定*/
         @import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c');
+        /*進捗バー*/
         @media screen and (max-width: 767px) {
             .progressbar .item {
                 font-size: 11px;
@@ -28,6 +30,39 @@
         }
         .progressbar .item.active:not(:last-child)::before {
             border-left: none;
+        }
+        .progressbar {
+            width: 52%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .progressbar .item {
+            position: relative;
+            width: 33%;
+            text-align: center;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 0;
+            line-height: 1.5;
+            background: #F5F5F5;
+            color: #999999;
+        }
+        .progressbar .item:not(:last-child)::before,
+        .progressbar .item:not(:last-child)::after {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            bottom: 0;
+            left: 100%;
+            content: '';
+            border: 37px solid transparent;
+            border-left: 20px solid #F5F5F5;
+            margin: auto;
+        }
+        .progressbar .item:not(:last-child)::before {
+            margin-left: 1px;
+            border-left-color: #FFF;
         }
         body {
             font-family: 'M PLUS Rounded 1c', sans-serif;
@@ -88,250 +123,260 @@
         .form-clear-button:hover {
         background-color: #CCCCCC;
         }
-        .progressbar {
-            width: 52%;
-            display: flex;
-            flex-wrap: wrap;
+        /*二分割表示*/
+        .split{
+            display: table;
+            width: 100%;
         }
-        .progressbar .item {
-            position: relative;
-            width: 33%;
-            text-align: center;
-            position: relative;
-            align-items: center;
-            justify-content: center;
-            padding: 13px 0;
-            line-height: 1.5;
-            background: #F5F5F5;
-            color: #999999;
+        .split-item{
+            display: table-cell;
+            padding: 20px;
+            width: 50%;
         }
-        .progressbar .item:not(:last-child)::before,
-        .progressbar .item:not(:last-child)::after {
-            position: absolute;
-            z-index: 2;
-            top: 0;
-            bottom: 0;
-            left: 100%;
-            content: '';
-            border: 37px solid transparent;
-            border-left: 20px solid #F5F5F5;
-            margin: auto;
+        .split-left{
+            width: 50%;
         }
-        .progressbar .item:not(:last-child)::before {
-            margin-left: 1px;
-            border-left-color: #FFF;
+        .split-left__inner{
+            height: 20%;
+            position: fixed;
+            width: 20%;
+        }
+        .split-right__inner{
+            height: 80%;
+        }
+        @media screen and (max-width:1024px) {
+            .split{
+                display: block;
+            }
+            .split-item{
+                display: block;
+                width: auto;
+            }
+            .split-left__inner{
+                position: fixed;
+                width: auto;
+                /*width: 20%;*/
+            }
+        }
+        /*ボタン・フォーム間の距離調整*/
+        .button-field{
+            margin-top: 10%;
         }
     </style>
 </head>
 <body>
-<div class="progressbar">
-    <div class="item active">STEP.1<br>ご入力</div>
-    <div class="item">STEP.2<br>ご確認</div>
-    <div class="item">STEP.3<br>完了</div>
-</div>
+    <!-- 進捗バーの表示 -->
+    <div class="progressbar">
+        <div class="item active">STEP.1<br>ご入力</div>
+        <div class="item">STEP.2<br>ご確認</div>
+        <div class="item">STEP.3<br>完了</div>
+    </div>
 
-<div class="content">
-    <h1 align="center">投資信託注文情報入力</h1>
-    <h3>口座情報</h3>
-    <form action="#" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post">
-        <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
-            <select id = "bank" th:field="*{bankName}" class="form-control">
-                <option th:each="option : ${bankNameOptions}"
-                        th:value="${option}"
-                        th:text="${option}">選択肢
-                </option>
-            </select></p>
+    <div class="content">
+        <h1 align="center">投資信託注文情報入力</h1>
 
-        <!-- 支店名 -->
-        <p><label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
-            <input type="text" id = "branch" th:field="*{branchName}" class="form-control" placeholder="かもめ（20文字以内で記入）"/></p>
-        <!--　科目名 -->
-        <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
-            <select id= "bankAccount" th:field="*{bankAccountType}" class="form-control">
-                <option th:each="option : ${bankAccountOptions}"
-                        th:value="${option}"
-                        th:text="${option}">選択肢
-                </option>
-            </select></p>
+        <form action="#" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post">
+            <div class="split">
+                <div class="split-item split-left">
+                    <div class="split-left__inner">
+                        <h3>口座情報</h3>
+                        <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
+                            <select id = "bank" th:field="*{bankName}" class="form-control">
+                                <option th:each="option : ${bankNameOptions}"
+                                        th:value="${option}"
+                                        th:text="${option}">選択肢
+                                </option>
+                            </select></p>
 
-        <!--　口座番号 -->
-        <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" id = "bankAccountNum" th:field="*{bankAccountNum}" min = 1 max = 9999999 class="form-control" placeholder="1234567（7桁の数字で記入）" /></p>
+                        <!-- 支店名 -->
+                        <p><label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
+                            <input type="text" id = "branch" th:field="*{branchName}" class="form-control" placeholder="かもめ（20文字以内で記入）"/></p>
+                        <!--　科目名 -->
+                        <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
+                            <select id= "bankAccount" th:field="*{bankAccountType}" class="form-control">
+                                <option th:each="option : ${bankAccountOptions}"
+                                        th:value="${option}"
+                                        th:text="${option}">選択肢
+                                </option>
+                            </select></p>
 
-        <br>
-        <h3>購入情報</h3>
-        <!-- 購入者名 -->
-        <p><label class="ml-1">購入者名: <small class="text-danger ml-1">※</small></label><br>
-            <input type="text" id = "name" th:field="*{name}" maxlength="20" class="form-control" placeholder="山田太郎"/></p>
+                        <!--　口座番号 -->
+                        <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
+                            <input type="number" id = "bankAccountNum" th:field="*{bankAccountNum}" min = 1 max = 9999999 class="form-control" placeholder="1234567（7桁の数字で記入）" /></p>
+                    </div><!--split-left__inner-->
+                </div><!--split-item split-left-->
+                <div class="split-item split-right">
+                    <div class="split-right__inner">
+                        <h3>購入情報</h3>
+                        <!-- 購入者名 -->
+                        <p><label class="ml-1">購入者名: <small class="text-danger ml-1">※</small></label><br>
+                            <input type="text" id = "name" th:field="*{name}" maxlength="20" class="form-control" placeholder="山田太郎"/></p>
 
-        <!--　銘柄選択 -->
-        <p><label class="ml-1">銘柄選択: <small class="text-danger ml-1">※</small></label><br>
-            <select id = "fundName" th:field="*{fundName}" class="form-control">
-                <option th:each="option : ${fundNameOptions}"
-                        th:value="${option}"
-                        th:text="${option}">選択肢
-                </option>
-            </select></p>
+                        <!--　銘柄選択 -->
+                        <p><label class="ml-1">銘柄選択: <small class="text-danger ml-1">※</small></label><br>
+                            <select id = "fundName" th:field="*{fundName}" class="form-control">
+                                <option th:each="option : ${fundNameOptions}"
+                                        th:value="${option}"
+                                        th:text="${option}">選択肢
+                                </option>
+                            </select></p>
 
-        <!-- 購入金額 -->
-        <p><label class="ml-1">購入金額(円): <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" id = "money" th:field="*{money}" min = 1 max=99999999999999999999 class="form-control" placeholder="1000"/></p>
+                        <!-- 購入金額 -->
+                        <p><label class="ml-1">購入金額(円): <small class="text-danger ml-1">※</small></label><br>
+                            <input type="number" id = "money" th:field="*{money}" min = 1 max=99999999999999999999 class="form-control" placeholder="1000"/></p>
+                    </div><!--split-right__inner-->
+                </div><!--split-item split-right-->
+            </div><!--split-->
+            <!-- 確認ボタン・クリアボタン -->
+            <div class = button-field>
+                <p style="text-align: center;">
+                    <input type="submit" value="確認" onclick= "return checkForm()"
+                           class="form-control-button form-confirmation-button"/>
+                    <input type="reset" value="クリア"
+                           class="form-control-button form-clear-button"/></p>
+            </div>
+        </form>
 
-        <p style="text-align: center;"><input type="submit" value="確認" onclick= "return checkForm()"
-                                              class="form-control-button form-confirmation-button"/>
-            <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>
+        <script>
+            // 入力内容のエラーチェックを行う関数
+            function checkForm() {
+                console.log("aaa");
+                var flag = Boolean("true"); //入力内容のエラーの有無を判定
+                // 各項目の要素を取得
+                var bank = document.getElementById("bank");
+                var branchBox = document.getElementById("branch");
+                var bankAccount = document.getElementById("bankAccount");
+                var bankAccountNumBox= document.getElementById("bankAccountNum")
+                var nameBox= document.getElementById("name");
+                var fundName = document.getElementById("fundName");
+                var moneyBox= document.getElementById("money");
 
-    </form>
+                // 要素の値を取得
+                var branch= document.getElementById("branch").value;
+                var bankAccountNum= document.getElementById("bankAccountNum").value;
+                var name= document.getElementById("name").value;
+                var money= document.getElementById("money").value;
 
-    <script>
-        // 未入力チェックを行う関数
-        function checkForm() {
-            console.log("aaa");
-            var flag = Boolean("true");
-            // セレクトボックスの要素を取得
-            var bank = document.getElementById("bank");
-            var branchBox = document.getElementById("branch");
-            var branch= document.getElementById("branch").value;
-            var bankAccount = document.getElementById("bankAccount");
-            var bankAccountNumBox= document.getElementById("bankAccountNum")
-            var bankAccountNum= document.getElementById("bankAccountNum").value;
-            var nameBox= document.getElementById("name");
-            var name= document.getElementById("name").value;
-            var fundName = document.getElementById("fundName");
-            var moneyBox= document.getElementById("money");
-            var money= document.getElementById("money").value;
-
-
-            var alertText = String();
-            let errorNum = 0;
-
-
-            // 選択されているオプションのインデックスを取得
-            var bankIndex = bank.selectedIndex;
-            var bankAccountIndex = bankAccount.selectedIndex;
-            var fundNameIndex = fundName.selectedIndex;
-
-
-            // 金融機関名の入力確認
-            if (bankIndex === 0) {
-                alertText += '【金融機関名】未選択です。\n';
-                errorNum += 1;
-                focus();
-                bank.style.backgroundColor = "#f0e68c"
-                flag = false;
-            }else{
-                bank.style.backgroundColor = "#fff"
-            }
-
-            //支店名の入力確認
-            if(branch.length === 0){
-                alertText += '【支店名】未入力です。\n';
-                errorNum += 1;
-                focus();
-                branchBox.style.backgroundColor = "#f0e68c"
-                flag = false;
-            }
-            else if(branch.length > 20){
-                alertText += '【支店名】20文字以内で入力してください。\n';
-                errorNum += 1;
-                focus();
-                branchBox.style.backgroundColor = "#f0e68c"
-                flag = false;
-            }else{
-                branchBox.style.backgroundColor = "#fff"
-            }
-
-            //科目名の入力確認
-            if (bankAccountIndex === 0) {
-                alertText += '【科目名】未選択です。\n';
-                errorNum += 1;
-                focus();
-                bankAccount.style.backgroundColor = "#f0e68c"
-                flag = false;
-            }else{
-                bankAccount.style.backgroundColor = "#fff"
-            }
-
-
-            if (!(bankAccountNum.length === 7)) {
-                if(bankAccountNum.length === 0){
-                    alertText += '【口座番号】未入力です。\n';
+                // 選択されているオプションのインデックスを取得
+                var bankIndex = bank.selectedIndex;
+                var bankAccountIndex = bankAccount.selectedIndex;
+                var fundNameIndex = fundName.selectedIndex;
+                //アラート文について
+                var alertText = String(); //アラート文の中身を格納
+                let errorNum = 0; //エラーが起きた個数をカウント
+                // 金融機関名の入力確認
+                if (bankIndex === 0) {
+                    alertText += '【金融機関名】未選択です。\n';
                     errorNum += 1;
                     focus();
-                    bankAccountNumBox.style.backgroundColor = "#f0e68c"
+                    bank.style.backgroundColor = "#f0e68c"
+                    flag = false;
+                }else{
+                    bank.style.backgroundColor = "#fff"
+                }
+                //支店名の入力確認
+                if(branch.length === 0){
+                    alertText += '【支店名】未入力です。\n';
+                    errorNum += 1;
+                    focus();
+                    branchBox.style.backgroundColor = "#f0e68c"
+                    flag = false;
+                }
+                else if(branch.length > 20){
+                    alertText += '【支店名】20文字以内で入力してください。\n';
+                    errorNum += 1;
+                    focus();
+                    branchBox.style.backgroundColor = "#f0e68c"
+                    flag = false;
+                }else{
+                    branchBox.style.backgroundColor = "#fff"
+                }
+                //科目名の入力確認
+                if (bankAccountIndex === 0) {
+                    alertText += '【科目名】未選択です。\n';
+                    errorNum += 1;
+                    focus();
+                    bankAccount.style.backgroundColor = "#f0e68c"
+                    flag = false;
+                }else{
+                    bankAccount.style.backgroundColor = "#fff"
+                }
+                //口座番号の入力確認
+                if (!(bankAccountNum.length === 7)) {
+                    if(bankAccountNum.length === 0){
+                        alertText += '【口座番号】未入力です。\n';
+                        errorNum += 1;
+                        focus();
+                        bankAccountNumBox.style.backgroundColor = "#f0e68c"
+                        flag = false;
+                    }
+                    else{
+                        alertText += '【口座番号】7桁の数字で入力してください。\n';
+                        errorNum += 1;
+                        bankAccountNumBox.style.backgroundColor = "#f0e68c"
+                        flag = false;
+                    }
+                }else{
+                    bankAccountNumBox.style.backgroundColor = "#fff"
+                }
+                //購入者名の入力確認
+                if(name.length === 0){
+                    alertText += '【購入者名】未入力です。\n';
+                    errorNum += 1;
+                    focus();
+                    nameBox.style.backgroundColor = "#f0e68c"
+                    flag = false;
+                }
+                else if(name.length > 20){
+                    alertText += '【購入者名】20文字以下の文字を入力してください。\n';
+                    nameBox += 1;
+                    focus();
+                    nameBox.style.backgroundColor = "#f0e68c"
                     flag = false;
                 }
                 else{
-                    alertText += '【口座番号】7桁の数字で入力してください。\n';
+                    nameBox.style.backgroundColor = "#fff"
+                }
+                //銘柄選択の入力確認
+                if (fundNameIndex === 0) {
+                    alertText += '【銘柄選択】未選択です。\n';
                     errorNum += 1;
-                    bankAccountNumBox.style.backgroundColor = "#f0e68c"
+                    focus();
+                    fundName.style.backgroundColor = "#f0e68c"
                     flag = false;
                 }
-            }else{
-                bankAccountNumBox.style.backgroundColor = "#fff"
+                else{
+                    fundName.style.backgroundColor = "#fff"
+                }
+                //購入金額の入力確認
+                if(money.length === 0){
+                    alertText += '【購入金額】未入力です。\n';
+                    errorNum += 1;
+                    focus();
+                    moneyBox.style.backgroundColor = "#f0e68c"
+                    flag = false;
+                }
+                else if(money.length > 20){
+                    alertText += '【購入金額】20桁以下の数字を入力してください。\n';
+                    errorNum += 1;
+                    focus();
+                    moneyBox.style.backgroundColor = "#f0e68c"
+                    flag = false;
+                }else{
+                    moneyBox.style.backgroundColor = "#fff"
+                }
+                //入力内容にエラーがあるかどうかを確認
+                if(flag === false){
+                    alertText += '\n' + errorNum + '個のエラーを発見しました。';
+                    alert(alertText);
+                    return false;
+                }
+                //エラーがない場合は次の画面へ
+                else{
+                    return true;
+                }
             }
-
-
-            if(name.length === 0){
-                alertText += '【購入者名】未入力です。\n';
-                errorNum += 1;
-                focus();
-                nameBox.style.backgroundColor = "#f0e68c"
-                flag = false;
-            }
-            else if(name.length > 20){
-                alertText += '【購入者名】20文字以下の文字を入力してください。\n';
-                nameBox += 1;
-                focus();
-                nameBox.style.backgroundColor = "#f0e68c"
-                flag = false;
-            }
-            else{
-                nameBox.style.backgroundColor = "#fff"
-            }
-
-            if (fundNameIndex === 0) {
-                alertText += '【銘柄選択】未選択です。\n';
-                errorNum += 1;
-                focus();
-                fundName.style.backgroundColor = "#f0e68c"
-                flag = false;
-            }
-            else{
-                fundName.style.backgroundColor = "#fff"
-            }
-
-            if(money.length === 0){
-                alertText += '【購入金額】未入力です。\n';
-                errorNum += 1;
-                focus();
-                moneyBox.style.backgroundColor = "#f0e68c"
-                flag = false;
-            }
-            else if(money.length > 20){
-                alertText += '【購入金額】20桁以下の数字を入力してください。\n';
-                errorNum += 1;
-                focus();
-                moneyBox.style.backgroundColor = "#f0e68c"
-                flag = false;
-            }else{
-                moneyBox.style.backgroundColor = "#fff"
-            }
-
-
-            if(flag === false){
-                alertText += '\n' + errorNum + '個のエラーを発見しました。';
-                alert(alertText);
-                return false;
-            }
-            else{
-                return true;
-            }
-        }
-    </script>
-</div>
-
-
+        </script>
+    </div>
 </body>
-
 </html>
