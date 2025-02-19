@@ -42,11 +42,22 @@ public class InvestmentTrustController {
         model.addAttribute("money", investmentTrustForm.getMoney());
         //
         model.addAttribute("investmentTrustApplication", investmentTrustForm);
+        orderInvestmentTrustService.orderInvestmentTrust_2(investmentTrustForm);
         return "investmentTrustConfirmation";
     }
 
     @PostMapping("/investmentTrustCompletion")
     public String completion(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
+        model.addAttribute("bankName", investmentTrustForm.getBankName());
+        model.addAttribute("bankAccountNum", investmentTrustForm.getBankAccountNum());
+        //以下追加したもの
+        model.addAttribute("branchName", investmentTrustForm.getBranchName());
+        model.addAttribute("bankAccountType", investmentTrustForm.getBankAccountType());
+        model.addAttribute("name", investmentTrustForm.getName());
+        model.addAttribute("fundName", investmentTrustForm.getFundName());
+        model.addAttribute("money", investmentTrustForm.getMoney());
+        //
+        model.addAttribute("investmentTrustApplication", investmentTrustForm);
         orderInvestmentTrustService.orderInvestmentTrust(investmentTrustForm);
         return "investmentTrustCompletion";
     }

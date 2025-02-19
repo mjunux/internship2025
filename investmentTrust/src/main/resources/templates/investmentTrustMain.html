@@ -26,7 +26,7 @@
          overflow: auto;
         }
         .form-control {
-            width: 60%;
+            width: 100%;
             padding: 8px;
             margin: 5px 0;
             box-sizing: border-box;
@@ -37,7 +37,7 @@
         .form-control-button {
         width: 200px;
         padding: 10px 20px;
-        margin-top: 10px;
+        margin-top: 20px;
         border: none;
         cursor: pointer;
         border-radius: 5px;
@@ -140,6 +140,13 @@
         text-align: left;
         display: inline-block;
         }
+        .inner_content {
+         width: 60%;
+         min-height: 50vh;
+         overflow: auto;
+         margin-left: auto;
+         margin-right: auto;
+         }
     </style>
 </head>
 <body>
@@ -149,51 +156,53 @@
             <li><span class="bubble"></span><span>注文内容確認</span></li>
             <li><span class="bubble"></span><span>注文完了</span></li>
         </ul>
-        <h1>投資信託注文情報入力</h1>
+        <h1 style="text-align: center">投資信託注文情報入力</h1>
         <form action="#" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post">
-            <p><label class="ml-1 five-characters"><span>金融機関名: <small class="text-danger ml-1">※</small></span></label><br>
-                <select th:field="*{bankName}" class="form-control" required>
-                    <option value="" selected hidden>金融機関を選択してください</option>
-                    <option th:each="option : ${bankNames}"
+            <div class="inner_content">
+                <p><label class="ml-1 five-characters"><span>金融機関名: <small class="text-danger ml-1">※</small></span></label><br>
+                    <select th:field="*{bankName}" class="form-control" required>
+                        <option value="" selected hidden>金融機関を選択してください</option>
+                        <option th:each="option : ${bankNames}"
+                                th:value="${option}"
+                                th:text="${option}">
+                        </option>
+                    </select></p>
+
+                <!-- 以下追加したもの -->
+                <p><label class="ml-1 three-characters">支店名: <small class="text-danger ml-1">※</small></label><br>
+                    <input type="text" th:field="*{branchName}" class="form-control" placeholder="○○支店" required></p>
+
+                <p><label class="ml-1 three-characters">科目名: <small class="text-danger ml-1">※</small></label><br>
+                    <select th:field="*{bankAccountType}" class="form-control" placeholder="普通" required>
+                    <option value="" selected hidden>科目名を選択してください</option>
+                    <option th:each="option : ${bankAccountTypes}"
                             th:value="${option}"
                             th:text="${option}">
                     </option>
                 </select></p>
 
-            <!-- 以下追加したもの -->
-            <p><label class="ml-1 three-characters">支店名: <small class="text-danger ml-1">※</small></label><br>
-                <input type="text" th:field="*{branchName}" class="form-control" placeholder="○○支店" required></p>
+                <p><label class="ml-1 four-characters">口座番号: <small class="text-danger ml-1">※</small></label><br>
+                    <input type="text" th:field="*{bankAccountNum}" class="form-control" placeholder="口座番号を7桁で入力してください(例：1234567)" maxlength="7" pattern="[0-9]{7}" required></p>
 
-            <p><label class="ml-1 three-characters">科目名: <small class="text-danger ml-1">※</small></label><br>
-                <select th:field="*{bankAccountType}" class="form-control" placeholder="普通" required>
-                <option value="" selected hidden>科目名を選択してください</option>
-                <option th:each="option : ${bankAccountTypes}"
-                        th:value="${option}"
-                        th:text="${option}">
-                </option>
-            </select></p>
+                <p><label class="ml-1 four-characters">購入者名: <small class="text-danger ml-1">※</small></label><br>
+                    <input type="text" th:field="*{name}" class="form-control" placeholder="購入者氏名を入力してください" required></p>
 
-            <p><label class="ml-1 four-characters">口座番号: <small class="text-danger ml-1">※</small></label><br>
-                <input type="text" th:field="*{bankAccountNum}" class="form-control" placeholder="口座番号を7桁で入力してください(例：1234567)" maxlength="7" pattern="[0-9]{7}" required></p>
+                <p><label class="ml-1 four-characters">銘柄選択: <small class="text-danger ml-1">※</small></label><br>
+                    <select th:field="*{fundName}" class="form-control" placeholder="銘柄を選択してください" required>
+                    <option value="" selected hidden>銘柄を選択してください</option>
+                    <option th:each="option : ${blandNames}"
+                                th:value="${option}"
+                                th:text="${option}">
+                        </option>
+                    </select></p>
 
-            <p><label class="ml-1 four-characters">購入者名: <small class="text-danger ml-1">※</small></label><br>
-                <input type="text" th:field="*{name}" class="form-control" placeholder="購入者氏名を入力してください" required></p>
+                <p><label class="ml-1 four-characters">購入金額: <small class="text-danger ml-1">※</small></label><br>
+                    <input type="number" th:field="*{money}" class="form-control" placeholder="金額を入力してください" required></p>
 
-            <p><label class="ml-1 four-characters">銘柄選択: <small class="text-danger ml-1">※</small></label><br>
-                <select th:field="*{fundName}" class="form-control" placeholder="銘柄を選択してください" required>
-                <option value="" selected hidden>銘柄を選択してください</option>
-                <option th:each="option : ${blandNames}"
-                            th:value="${option}"
-                            th:text="${option}">
-                    </option>
-                </select></p>
-
-            <p><label class="ml-1 four-characters">購入金額: <small class="text-danger ml-1">※</small></label><br>
-                <input type="number" th:field="*{money}" class="form-control" placeholder="金額を入力してください" required></p>
-
-            <p style="text-align: center;"><input type="submit" value="確認"
-                                                  class="form-control-button form-confirmation-button"/>
-                <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>
+                <p style="text-align: center;"><input type="submit" value="確認"
+                                                      class="form-control-button form-confirmation-button"/>
+                    <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>
+            </div>
         </form>
     </div>
 </body>

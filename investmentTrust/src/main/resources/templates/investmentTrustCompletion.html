@@ -37,7 +37,7 @@
         .form-control-button {
         width: 80px;
         padding: 10px 20px;
-        margin-top: 10px;
+        margin-top: 20px;
         border: none;
         cursor: pointer;
         border-radius: 5px;
@@ -125,6 +125,16 @@
         .cp_stepflow02 > li.active .bubble::before {
             background-color: #fb8c00;
         }
+        table {
+        margin: auto;
+        font-size: 150%;
+        border-collapse: collapse;
+        }
+        th, td {
+        width: 20%;
+        height: 20%;
+        border: 1px solid #333;
+        }
     </style>
 </head>
 <body style="text-align:center">
@@ -135,7 +145,41 @@
             <li class="completed"><span class="bubble"></span><span>注文完了</span></li>
         </ul>
         <h1>注文完了</h1>
+        <h4>以下の内容で注文を受け付けました</h4>
         <h2>注文情報</h2>
+        <form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
+            <table>
+                <tr>
+                    <th>金融機関名</th>
+                    <td><span th:text="*{bankName}"></span><input type="hidden" name="bankName" th:value="*{bankName}"/></td>
+                </tr>
+                <!-- 以下追加したもの -->
+                <tr>
+                    <th>支店名</th>
+                    <td><span th:text="*{branchName}"></span><input type="hidden" name="branchName" th:value="*{branchName}"/></td>
+                </tr>
+                <tr>
+                    <th>科目名</th>
+                    <td><span th:text="*{bankAccountType}"></span><input type="hidden" name="bankAccountType" th:value="*{bankAccountType}"/></td>
+                </tr>
+                <tr>
+                    <th>口座番号</th>
+                    <td><span th:text="*{bankAccountNum}"></span><input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/></td>
+                </tr>
+                <tr>
+                    <th>購入者名</span></th>
+                    <td><span th:text="*{name}"></span><input type="hidden" name="name" th:value="*{name}"/></td>
+                </tr>
+                <tr>
+                    <th>銘柄選択</th>
+                    <td><span th:text="*{fundName}"></span><input type="hidden" name="fundName" th:value="*{fundName}"/></td>
+                </tr>
+                <tr>
+                    <th>購入金額</th>
+                    <td><span th:text="*{money}"></span><input type="hidden" name="money" th:value="*{money}"/></td>
+                </tr>
+            </table>
+        </form>
         <p><input type="button" value="注文に戻る" onclick="window.location='/investmentTrust';"/></p>
     </div>
 </body>
