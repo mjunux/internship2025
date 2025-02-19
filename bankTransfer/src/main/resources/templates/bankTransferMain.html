@@ -79,7 +79,7 @@
 
             </select></p>
         <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{SubjectName}" class="form-control">
+            <select th:field="*{subjectName}" class="form-control">
                 <option th:each="option : ${SubjectNameOptions}"
                         th:value="${option}"
                         th:text="${option}">選択肢
@@ -100,6 +100,16 @@
             <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>
     </form>
 </div>
+<script>
+    function testCheck(){
+  var test = document.getElementById("test").value;
+  if(test.length < 6){
+    var validate = "6文字以上入力してください。";
+    document.getElementById("validate_msg").innerHTML = validate;
+    return false;
+  }
+}
+</script>
 </body>
 
 </html>
