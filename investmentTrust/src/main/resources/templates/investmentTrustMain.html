@@ -287,7 +287,8 @@
                                     if(finalMoney >= 100){
                                         document.getElementById( "check" ).innerHTML = fundVariety +"："+  finalMoney + " 円：";
                                         document.getElementById( "check_2" ).innerHTML = "";
-                                    }else{
+                                    }
+                                    else{
                                         document.getElementById( "check" ).innerHTML = fundVariety +"："+  finalMoney + " 円";
                                         document.getElementById( "check_2" ).innerHTML = "Error: 100円以上のご注文をお願いします";
                                     }                                }
@@ -472,7 +473,7 @@
                     fundName.style.backgroundColor = "#fff"
                 }
                 //購入金額の入力確認
-                if(money === 0){
+                if(isNaN(money)){
                     alertText += '【購入金額】未入力です。\n';
                     errorNum += 1;
                     focus();
