@@ -213,7 +213,7 @@
                     <h3>　購入情報　</h3>
                     <p>購入者名　:　 <b><span th:text="*{name}"></span></b></p>
                     <p>銘柄選択　:　 <b><span th:text="*{fundName}"></span></b></p>
-                    <p>購入金額　:　 <b><span th:text="*{finalMoney}"></span>円</b></p>
+                    <p>購入金額　:　 <b><span th:text="*{money}"></span>円</b></p>
                 </div><!--split-right__inner-->
             </div><!--split-item split-right-->
         </div>
@@ -223,7 +223,7 @@
         <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
         <input type="hidden" name="name" th:value="*{name}"/>
         <input type="hidden" name="fundName" th:value="*{fundName}"/>
-        <input type="hidden" name="money" th:value="*{finalMoney}"/>
+        <input type="hidden" name="money" th:value="*{money}"/>
         <p style="text-align: center;">
             <input type="submit" id="submit" value="申込" class="form-control-button form-confirmation-button"/>
             <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';" class="form-control-button form-clear-button"/>

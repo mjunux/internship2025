@@ -40,7 +40,6 @@
             position: relative;
             width: 33%;
             text-align: center;
-            position: relative;
             align-items: center;
             justify-content: center;
             padding: 13px 0;
@@ -189,10 +188,19 @@
             margin-top: 8px;margin-bottom: 8px;
 
         }
+        .introduce{
+            font-weight: bold;
+            color: #0070BD;
+            margin: 0 0 0 20px;
+        }
+        .checkMoney{
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <div id="Finamoney">ぐろーばる</div>
+    <div id="finalMoney" th:type="Integer"></div>
+    <div id="unitNum" th:type="Integer"></div>
     <!-- 進捗バーの表示 -->
     <div class="progressbar">
         <div class="item active">STEP.1<br>ご入力</div>
@@ -241,35 +249,107 @@
 
                         <!--　銘柄選択 -->
                         <p><label class="ml-1">銘柄選択: <small class="text-danger ml-1">※</small></label><br>
-                            <select id = "fundName" th:field="*{fundName}" class="form-control" onchange="inputCheck()">
+                            <select id = "fundName" th:field="*{fundName}" class="form-control" onchange="inputCheck(),introduce()">
                                 <option th:each="option : ${fundNameOptions}"
                                         th:value="${option}"
                                         th:text="${option}">選択肢
                                 </option>
                             </select></p>
-                        <!-- 購入金額 -->
-                        <p><label class="ml-1">購入金額(円): <small class="text-danger ml-1">※</small></label><br>
+                        <!-- 購入口数。ただし、DBに反映させるのは購入"金額" -->
+                        <p><label class="ml-1">購入口数(口): <small class="text-danger ml-1">※</small></label><br>
                             <input type="number" id = "money" th:field="*{money}" min = 1 max=99999999999999999999 class="form-control" placeholder="100円以上で購入してください（例：1000）"  onkeyup="inputCheck()"/></p>
-                            <div id="check">入力前</div>
+                            <div id="check" class = "checkMoney">銘柄と購入口数を入力すると金額が出ます</div>
+                            <div id="check_2" class = "text-danger"></div>
                         <script>
                             function inputCheck() {
-                                var inputValue = document.getElementById( "money" ).value;
+                                var inputValue = parseInt(document.getElementById( "money" ).value);
                                 var fundVariety = document.getElementById( "fundName" ).value;
-                                inputValue = inputValue*300;
-                                document.getElementById( "check" ).innerHTML = fundVariety + '\n' + inputValue + " 円";
-                                document.getElementById( "money" ).value = inputValue;
+                                let flag = Boolean(false);
+                                console.log(inputValue);
+                                console.log(fundVariety);
+                                if(fundVariety === "fundA(1.2円/口)" && inputValue >= 0){
+                                    finalMoney = Math.round(inputValue*1.2);
+                                    flag = true;
+                                }
+                                else if(fundVariety === "fundB(1.5円/口)" && inputValue >= 0){
+                                    finalMoney = Math.round(inputValue*1.5);
+                                    flag = true;
+                                }
+                                else if(fundVariety === "fundC(1.3円/口)" && inputValue >= 0){
+                                    finalMoney = Math.round(inputValue*1.3);
+                                    flag = true;
+                                }
+
+                                console.log(flag);
+
+                                if(flag === true){
+                                    console.log(finalMoney + ":a");
+                                    if(finalMoney >= 100){
+                                        document.getElementById( "check" ).innerHTML = fundVariety +"："+  finalMoney + " 円：";
+                                        document.getElementById( "check_2" ).innerHTML = "";
+                                    }else{
+                                        document.getElementById( "check" ).innerHTML = fundVariety +"："+  finalMoney + " 円";
+                                        document.getElementById( "check_2" ).innerHTML = "Error: 100円以上のご注文をお願いします";
+                                    }                                }
+                                else{
+                                    if(inputValue >= 0){}
+                                    document.getElementById( "check" ).innerHTML = "銘柄と購入口数を入力すると金額が出ます";
+                                    document.getElementById( "check_2" ).innerHTML = "";
+                                }
+                                //finalMoney = inputValue*1.3;
+                                //document.getElementById( "check" ).innerHTML = fundVariety + '\n' + finalMoney + " 円";
+                                //document.getElementById( "check" ).innerHTML = fundVariety + '\n' + finalMoney + " 円";
+                                //document.getElementById( "money" ).value = finalMoney;
+                            }
+                            function introduce(){
+                                var introduceText = String();
+                                var fundVariety = document.getElementById( "fundName" ).value;
+                                console.log(fundVariety);
+                                let flag = Boolean(false);
+                                if(fundVariety === "fundA(1.2円/口)"){
+                                    introduceText = 'ヨーロッパ内の企業約500社の時価総額をもとに算出されます！';
+                                    flag = true;
+                                }
+                                else if(fundVariety === "fundB(1.5円/口)"){
+                                    introduceText = "米国の大手企業約300社の時価総額をもとに算出されます！";
+                                    flag = true;
+                                }
+                                else if(fundVariety === "fundC(1.3円/口)"){
+                                    introduceText = "中国のベンチャー企業約50社の時価総額をもとに算出されます！";
+                                    flag = true;
+                                }
+
+                                if(flag === true){
+                                    console.log("hello");
+                                    document.getElementById( "introduce" ).innerHTML
+                                        = "【" + document.getElementById( "fundName" ).value + "】"
+                                        + introduceText;
+                                }
+                                else{
+                                    document.getElementById( "introduce" ).innerHTML
+                                        = "銘柄を選択すると、概要を表示します";
+                                }
+                            }
+                            function initIntroduce(){
+                                console.log("ok");
+                                document.getElementById( "check" ).innerHTML = "銘柄と購入口数を入力すると金額が出ます";
+                                document.getElementById( "check_2" ).innerHTML = "";
+                                document.getElementById( "introduce" ).innerHTML = "銘柄を選択すると、概要を表示します";
                             }
                         </script>
 
                     </div><!--split-right__inner-->
                 </div><!--split-item split-right-->
             </div><!--split-->
+
             <!-- 確認ボタン・クリアボタン -->
+            <br>
+            <div id ="introduce" class = "introduce" align="center">銘柄を選択すると、概要を表示します</div>
             <div class = button-field>
                 <p style="text-align: center;">
                     <input type="submit" value="確認" onclick= "return checkForm()"
                            class="form-control-button form-confirmation-button"/>
-                    <input type="reset" value="クリア"
+                    <input type="reset" value="クリア" onclick="return initIntroduce()"
                            class="form-control-button form-clear-button"/></p>
             </div>
         </form>
@@ -288,11 +368,17 @@
                 var fundName = document.getElementById("fundName");
                 var moneyBox= document.getElementById("money");
 
+
                 // 要素の値を取得
                 var branch= document.getElementById("branch").value;
                 var bankAccountNum= document.getElementById("bankAccountNum").value;
                 var name= document.getElementById("name").value;
-                var money= document.getElementById("money").value;
+                var unit = document.getElementById("money").value;
+                //document.getElementById("money").value = finalMoney;
+                let money = parseInt(finalMoney);
+                console.log(unit);
+                console.log(document.getElementById("money").value);
+
 
                 // 選択されているオプションのインデックスを取得
                 var bankIndex = bank.selectedIndex;
@@ -386,21 +472,21 @@
                     fundName.style.backgroundColor = "#fff"
                 }
                 //購入金額の入力確認
-                if(money.length === 0){
+                if(money === 0){
                     alertText += '【購入金額】未入力です。\n';
                     errorNum += 1;
                     focus();
                     moneyBox.style.backgroundColor = "#f0e68c"
                     flag = false;
                 }
-                else if(money.length <= 2){
+                else if(money <= 100){
                     alertText += '【購入金額】100円以上購入してください。\n';
                     errorNum += 1;
                     focus();
                     moneyBox.style.backgroundColor = "#f0e68c"
                     flag = false;
                 }
-                else if(money.length > 20){
+                else if(money > 10000000000000000000){
                     alertText += '【購入金額】20桁以下の数字を入力してください。\n';
                     errorNum += 1;
                     focus();
@@ -413,11 +499,14 @@
                 if(flag === false){
                     alertText += '\n' + errorNum + '個のエラーを発見しました。';
                     alert(alertText);
+                    document.getElementById("money").value = unit;
                     return false;
                 }
                 //エラーがない場合は次の画面へ
                 else{
+                    document.getElementById("money").value = money;
                     return true;
+
                 }
             }
         </script>
