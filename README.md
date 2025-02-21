@@ -22,3 +22,17 @@
 2. ▶ を押し、実行を押す（二回目からは右上の▶や`shift`+`F10`で最近起動したものを再起動できる）
 3. 実行後、実行ログで `Started InternshipApplication`を確認する
 4. `http://localhost:8083/investmentTrust` にブラウザでアクセス
+
+
+今回のインターンシップでの環境構築
+
+IDE（統合開発環境）：Intellij(無料版)
+　　　　　　　　　　　＋プラグイン（Lombok,space）
+          https://www.jetbrains.com/ja-jp/idea/
+
+JDK（Java）バージョン21.0.6 https://www.oracle.com/jp/java/technologies/downloads/#jdk21-windows
+Git   https://gitforwindows.org/
+
+やり方：https://qiita.com/T-H9703EnAc/items/4fbe6593d42f9a844b1c
+
+mySqlインストール先（MySQLとWor）
